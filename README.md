@@ -2,11 +2,10 @@
 
  Details can be found in the following papers
  
- * Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018).  Sparse sum-of-squares (SOS) optimization: A bridge between DSOS/SDSOS 
-     and SOS optimization for sparse polynomials. arXiv preprint arXiv:1807.05463.
+ * Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018).  [ Sparse sum-of-squares (SOS) optimization: A bridge between DSOS/SDSOS 
+     and SOS optimization for sparse polynomials](https://arxiv.org/pdf/1807.05463.pdf). arXiv preprint arXiv:1807.05463.
      
-* Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018, December).  Decomposition and completion of sum-of-squares matrices. 
-     In 2018 IEEE Conference on Decision and Control (CDC) (pp. 4026-4031). IEEE.
+* Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018, December).  [ Decomposition and completion of sum-of-squares matrices](https://arxiv.org/pdf/1804.02711.pdf). In 2018 IEEE Conference on Decision and Control (CDC) (pp. 4026-4031). IEEE.
 
 ## How to use this file
 
