@@ -18,8 +18,8 @@ You can copy corrsparsity.m and cliquesFromSpMatD.m to the folder of /modules/so
 ## Some further notes
 In the SOSexampelYalmip.m, we demonstrated three methods
 * Method 1 is the standard SOS approach:
-* Method 2 is based on SOS matrix decompsotion; See [1] for details
-* Method 3 is based on the correlative sparsity tehcnique, which is orginally proposed by Waki et al 2006; See [2] for a comparsion with DSOS/SDSOS techniques
+* Method 2 is based on SOS matrix decompsotion; See [2] for details
+* Method 3 is based on the correlative sparsity tehcnique, which is orginally proposed by Waki et al 2006; See [1] for a comparsion with DSOS/SDSOS techniques
 
 Also, note that 
 * 1) Methods 2 & 3 are equivalent and are in general more conservative than Method 1 
