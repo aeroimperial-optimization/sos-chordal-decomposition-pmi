@@ -1,16 +1,10 @@
-# sos_csp
+#                    A demo for the SOS matrix decompsotion  and Correlative Sparsity tehcnique
 
-% -------------------------------------------------------------------------
-%                   A demo for the SOS matrix decompsotion 
-%                     and Correlative Sparsity tehcnique
-% -------------------------------------------------------------------------
-% Details can be found in the following papers
-% [1] Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018). 
-%     Sparse sum-of-squares (SOS) optimization: A bridge between DSOS/SDSOS 
-%     and SOS optimization for sparse polynomials. arXiv preprint arXiv:1807.05463.
-% [2] Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018, December). 
-%     Decomposition and completion of sum-of-squares matrices. 
-%     In 2018 IEEE Conference on Decision and Control (CDC) (pp. 4026-4031). IEEE.
+ Details can be found in the following papers
+ [1] Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018).  Sparse sum-of-squares (SOS) optimization: A bridge between DSOS/SDSOS 
+     and SOS optimization for sparse polynomials. arXiv preprint arXiv:1807.05463.
+ [2] Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018, December).  Decomposition and completion of sum-of-squares matrices. 
+     In 2018 IEEE Conference on Decision and Control (CDC) (pp. 4026-4031). IEEE.
 
 % -----------------------------------------------------------
 % How to use this file
