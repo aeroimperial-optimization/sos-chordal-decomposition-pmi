@@ -13,7 +13,7 @@
 For the correlative sparsity tehcnique, we adapted the csp option in YALMIP, where we mainly changed the function sos/corrsparsity.m
 You can copy corrsparsity.m and cliquesFromSpMatD.m to the folder of /modules/sos, and replace the orginal corrsparsity.m
 
-* Note that cliquesFromSpMatD.m is copied from the repository of SparseCoLO.
+* Note that cliquesFromSpMatD.m is copied from the SparseCoLO package.
 
 ## Some further notes
 In the SOSexampelYalmip.m, we demonstrated three methods
