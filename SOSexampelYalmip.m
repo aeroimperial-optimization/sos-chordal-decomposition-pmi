@@ -18,6 +18,7 @@
 % where we mainly changed the function sos/corrsparsity.m
 % You can copy corrsparsity.m and cliquesFromSpMatD.m to the folder of
 % /modules/sos, and replace the orginal corrsparsity.m
+% Note that cliquesFromSpMatD.m is copied from the SparseCoLO package
 
 
 % -----------------------------------------------------------
@@ -57,7 +58,7 @@ for Index = 1:length(Num)
 
     N1  = length(mBasis);
     tmp = rand(N1);
-    tmp = tmp*tmp';     % PSD matrix
+    tmp = tmp*tmp';         % PSD matrix
     P   = mBasis'*tmp*mBasis;
     for i = 2:N
         tmp = rand(N1);
