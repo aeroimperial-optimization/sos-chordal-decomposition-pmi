@@ -14,10 +14,10 @@
 % How to use this file
 % -----------------------------------------------------------
 
-% For the correlative sparsity tehcnique, we adapted the csp option in YALMIP, 
+% For the correlative sparsity technique, we adapted the csp option in YALMIP, 
 % where we mainly changed the function sos/corrsparsity.m
 % You can copy corrsparsity.m and cliquesFromSpMatD.m to the folder of
-% /modules/sos, and replace the orginal corrsparsity.m
+% /modules/sos, and replace the original corrsparsity.m
 % Note that cliquesFromSpMatD.m is copied from the SparseCoLO package
 
 
@@ -27,7 +27,7 @@
 
 % Method 1 is the standard SOS approach:
 % Method 2 is based on SOS matrix decompsotion; See [1] for details
-% Method 3 is based on the correlative sparsity tehcnique
+% Method 3 is based on the correlative sparsity technique
 %             See [2] for a comparsion with DSOS/SDSOS techniques
 
 % Note that 
