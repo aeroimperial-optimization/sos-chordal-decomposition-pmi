@@ -15,7 +15,7 @@ You can copy corrsparsity.m and cliquesFromSpMatD.m to the folder of /modules/so
 * Note that cliquesFromSpMatD.m is copied from the SparseCoLO package.
 
 ## Some further notes
-In the SOSexampelYalmip.m, we demonstrated three methods
+In the SOSexampleYalmip.m, we demonstrated three methods
 * Method 1 is the standard SOS approach.
 * Method 2 is based on SOS matrix decompsotion; See [2] for details.
 * Method 3 is based on the correlative sparsity technique, which was orginally proposed by Waki et al 2006; See [1] for a comparsion with DSOS/SDSOS techniques.
