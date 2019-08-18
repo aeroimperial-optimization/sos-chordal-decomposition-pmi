@@ -1,4 +1,4 @@
-#                    A demo for the SOS matrix decompsotion  and Correlative Sparsity tehcnique
+#                    A demo for the SOS matrix decompsotion  and Correlative Sparsity technique
 
  Details can be found in the following papers
  
