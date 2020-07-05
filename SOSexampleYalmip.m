@@ -1,6 +1,6 @@
 % -------------------------------------------------------------------------
 %                   A demo for the SOS matrix decompsotion 
-%                     and Correlative Sparsity tehcnique
+%                     and Correlative Sparsity technique
 % -------------------------------------------------------------------------
 % Details can be found in the following papers
 % [1] Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018). 
