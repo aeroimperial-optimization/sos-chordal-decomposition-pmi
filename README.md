@@ -1,6 +1,6 @@
 # Sum-of-squares chordal decomposition of polynomial matrix inequalities: Examples & MATLAB scripts
 
-This repository contains MATLAB scripts that implement numerical examples for sum-of-squares (SOS) chordal decomposition results for polynomial matrices presented in the following paper: Details can be found in the following papers:
+This repository contains MATLAB scripts that implement numerical examples for sum-of-squares (SOS) chordal decomposition results for polynomial matrices presented in the following paper:
 
 1) Zheng, Y, and Fantuzzi, G. (2020) Sum-of-squares chordal decomposition of polynomial matrix inequalities (in preparation)
 
