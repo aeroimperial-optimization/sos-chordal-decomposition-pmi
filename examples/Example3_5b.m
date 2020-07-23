@@ -5,64 +5,84 @@
 %
 % Assume the option sos.csp in Yalmip has been modified
 % =================================================================
-
+warning off;
 clc;clear;
-Dim = 5:5:30;     % Dimension of the polynomial matrix
-                  % the range of 20:20:200 was used in the paper
 
-TimeSolver = zeros(length(Dim),2);
-Cost       = zeros(length(Dim),2);
-DimFull    = length(Dim);
-DimDec     = length(Dim);
-
-sdpvar x y          % sos variables
-sdpvar a b          % parameters
+sdpvar x y z          % sos variables
+sdpvar k1 k2          % parameters
 opts =  sdpsettings('solver','mosek');
 
-for index = 1:length(Dim)
-    m = Dim(index);
-    v = sdpvar(m,1);    % vector for scalarization  
+Dim = 2:2:6;     % Dimension of the polynomial matrix
+                 % the range of 5:5:40 was used in the paper                  
+nu = 1;          % degree of SOS multipler  
+                 % the range of 1:4 was used in the paper            
 
-    % generating the polynomial matrix for testing
-    B = zeros(m);
-    for i = 1:m
-        for j = 1:m
-            if i - j == 1 || j - i == 1
-                B(i,j) = 1;
+TimeSolver = cell(length(nu),1);  % time consumption by Mosek
+Cost       = cell(length(nu),1);  % Cost value
+
+
+for dind = 1:length(nu)
+    % each degree of SOS multipler 
+    TimeSolver{dind} = zeros(length(Dim),2);
+    Cost{dind}       = zeros(length(Dim),2);
+    DimFull    = length(Dim);
+    DimDec     = length(Dim);
+
+    
+    for index = 1:length(Dim)
+        d = Dim(index);
+
+        % generating the polynomial matrix for testing
+
+        k = [k1;k2];
+        m = 3*d;
+        a = [k2*x^4+y^4; k2*y^4+z^4; k2*z^4+x^4];
+        b = [x^2*y^2; y^2*z^2; z^2*x^2];
+        clear P;
+        for i = 1:m-1
+            if mod(i,2)
+                c = k1;
+            else
+                c = k2;
+            end
+            ind = rem([i-1,i],3)+1;
+            P(i,i) = a(ind(1));
+            P(i+1,i+1) = a(ind(2));
+            P(i,i+1) = b(ind(1))*c;
+            P(i+1,i) = b(ind(1))*c;
+        end
+        clear c
+        v = sdpvar(m,1);    % vector for scalarization  
+
+        % Standard SOS without exploiting chordal sparity
+        opts.sos.csp = 0;              % assume this option has been modified in Yalmip
+        opts.verbose = 0;
+        F = sos(v'*P*v*(x^2+y^2+z^2)^(nu(dind)));     % The current Yalmip only exploit csp in the scalar case 
+        if index <=  DimFull
+            try
+                sol = solvesos(F,k2 - 10*k1,opts);
+                TimeSolver{dind}(index,1) = sol.solvertime;
+                Cost{dind}(index,1)       = value(k2 - 10*k1);
+            catch
+                 DimFull = index;
+                 warning('Out of memory');
             end
         end
-    end
-    P = eye(m)*x^4 + (B*(a + b) + eye(m))*x^2*y^2 + eye(m)*y^4;
 
-    % Standard SOS without exploiting chordal sparity
-    opts.sos.csp = 0;              % assume this option has been modified in Yalmip
-    opts.verbose = 0;
-    F = sos(v'*P*v);               % The current Yalmip only exploit csp in the scalar case 
-    if index <= DimFull
-        try
-            sol = solvesos(F,a+b,opts);
-            TimeSolver(index,1) = sol.solvertime;
-            Cost(index,1)       = value(a+b);
-        catch
-             DimFull = index;
-             warning('Out of memory');
+         % SOS via exploiting chordal sparity
+         if index <= DimDec
+            opts.sos.csp = 1;              % only this option matters
+            F = sos(v'*P*v*(x^2+y^2+z^2)^(nu(dind)));               % The current Yalmip only exploit csp in the scalar case     
+            try
+                sol1 = solvesos(F,k2 - 10*k1,opts);
+                TimeSolver{dind}(index,2) = sol1.solvertime;
+                Cost{dind}(index,2) = value(k2 - 10*k1);
+            catch
+                DimDec = index;
+                warning('Out of memory');
+            end
         end
-    end
 
-     % SOS via exploiting chordal sparity
-     if index <= DimDec
-        opts.sos.csp = 1;              % only this option matters
-        F = sos(v'*P*v);               % The current Yalmip only exploit csp in the scalar case     
-        try
-            sol1 = solvesos(F,a+b,opts);
-            TimeSolver(index,2) = sol1.solvertime;
-            Cost(index,2) = value(a+b);
-        catch
-            DimDec = index;
-            warning('Out of memory');
-        end
+        fprintf('m = %d,  time %5.3f  %5.3f \n ',m, TimeSolver{dind}(index,1),TimeSolver{dind}(index,2));
     end
-    
-    fprintf('m = %d,  time %5.3f  %5.3f \n ',m, TimeSolver(index,1),TimeSolver(index,2));
 end
-
