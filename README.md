@@ -29,7 +29,7 @@ Also, note that
 ## Additional references
 1) Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018).  [ Sparse sum-of-squares (SOS) optimization: A bridge between DSOS/SDSOS and SOS optimization for sparse polynomials](https://arxiv.org/pdf/1807.05463.pdf). arXiv preprint arXiv:1807.05463.
 2) Zheng, Y., Fantuzzi, G., & Papachristodoulou, A. (2018, December).  [ Decomposition and completion of sum-of-squares matrices](https://arxiv.org/pdf/1804.02711.pdf). In 2018 IEEE Conference on Decision and Control (CDC) (pp. 4026-4031). IEEE.
-
+3) Waki, H., Kim, S., Kojima, M., & Muramatsu, M. (2006). Sums of squares and semidefinite program relaxations for polynomial optimization problems with structured sparsity. SIAM Journal on Optimization, 17(1), 218-242.
 
 ## Troubleshooting
 If you have any trouble running the scripts in this repository, please email [Yang Zheng](mailto:zhengy@g.harvard.edu?Subject=SOS-csp).
