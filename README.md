@@ -9,6 +9,7 @@ This repository contains MATLAB scripts that implement numerical examples for su
 To run the scripts in this repository you need a working MATLAB installation. In addition, please install:
 * The optimization toolbox [YALMIP](https://yalmip.github.io/)
 * An SDP solver compatible with YALMIP. We recommend [MOSEK](https://www.mosek.com/), but any of the solvers listed [here](https://yalmip.github.io/allsolvers/) should work.
+In addition, we adapted opts.sos.csp option to exploit chordal sparsity described in our paper. For this option, please
 * Copy corrsparsity.m and cliquesFromSpMatD.m to the folder of /modules/sos, and replace the original corrsparsity.m (cliquesFromSpMatD.m is copied from the SparseCoLO package)
 
 <!--- OLD CONTENT - TO BE UPDATED?
