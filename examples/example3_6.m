@@ -1,21 +1,22 @@
 % =================================================================
-% Code for Example 3-6 in our paper
-% Y. Zheng, G. Fantuzzi, Sum-of-squares chordal decomposition of 
-%                         polynomial matrix inequalities
+% Code for Example 3-6 in the paper:
+% Y. Zheng, G. Fantuzzi, Sum-of-squares chordal decomposition of polynomial 
+% matrix inequalities
 %
 % Assume the option sos.csp in Yalmip has been modified
 % =================================================================
 
-clear; 
-clear yalmip
-warning off
+% Clean up
+clear
+yalmip clear
 
-
+% Parameters
 Deg = 1;             % degree of SOS multipliers
                      % the range of 1:4 was used in the paper
 Dim = 5:5:15;        % Dimension of the polynomial matrix
                      % the range of 10:10:80 was used in the paper
-                    
+  
+% Initialize containers
 TimeSolver = cell(2,1);
 Cost       = cell(2,1);
 TimeSolver{1} = zeros(length(Dim),2);
@@ -23,21 +24,21 @@ Cost{1}       = zeros(length(Dim),2);
 TimeSolver{2} = zeros(length(Dim),2);
 Cost{2}       = zeros(length(Dim),2);
 
-opts =  sdpsettings('solver','mosek');
+% YALMIP options and variables
+opts =  sdpsettings();
 opts.verbose = 0;
 sdpvar x y lambda lambda1
+
+% Loop over degrees
 for ind = 1:length(Deg)
     TimeSolver{ind} = zeros(length(Dim),2);
-    Cost{ind}       = zeros(length(Dim),2);
-
+    Cost{ind} = zeros(length(Dim),2);
     DimFull = length(Dim);
-    DimDec  = length(Dim);
-
+    DimDec = length(Dim);
 
     % constriants for the compact region   
     g1 = 1 -x^2;
     g2 = x^2 - y^2;
-
     degree = Deg(ind);
     monobasis = monolist([x,y],degree);
 
@@ -64,7 +65,6 @@ for ind = 1:length(Deg)
                 Q2 = sdpvar(m*N);
                 S  = monobasis_Matrix'*Q2*monobasis_Matrix;   % SOS matrix
                 s2 = v'*S*v;
-
                 F = [sos(s0),sos(s1),sos(s2)];
                 F = [F, sos(v'*(P-lambda*eye(m))*v - s0 - s1*g1 - s2*g2)];
                 sosQvar = [vec(Q0);vec(Q1);vec(Q2)];

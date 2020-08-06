@@ -1,4 +1,4 @@
-function [x, fval] = ex36fmincon(m,plotAll)
+function [x, fval] = example3_6_fmincon(m,plotAll)
 % Exact answer for example 3.6 using fmincon
 % Inputs:
 % * m: size of the matrix P

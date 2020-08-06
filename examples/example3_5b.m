@@ -1,39 +1,40 @@
 % =================================================================
-% Code for Example 3-5b in our paper
-% Y. Zheng, G. Fantuzzi, Sum-of-squares chordal decomposition of 
-%                         polynomial matrix inequalities
+% Code for Example 3.5 in the paper:
+% Y. Zheng, G. Fantuzzi, Sum-of-squares chordal decomposition of polynomial 
+% matrix inequalities
 %
-% Assume the option sos.csp in Yalmip has been modified
+% NOTE: Assume the option sos.csp in Yalmip has been modified
 % =================================================================
-warning off;
-clc;clear;
+clc
+clear
 
+% YALMIP variables and options
 sdpvar x y z          % sos variables
 sdpvar k1 k2          % parameters
-opts =  sdpsettings('solver','mosek');
+opts =  sdpsettings();
+opts.verbose = 0;
 
+% Parameters
 Dim = 2:2:6;     % Dimension of the polynomial matrix
                  % the range of 5:5:40 was used in the paper                  
 nu = 1;          % degree of SOS multipler  
                  % the range of 1:4 was used in the paper            
 
+% Initalize containers
 TimeSolver = cell(length(nu),1);  % time consumption by Mosek
 Cost       = cell(length(nu),1);  % Cost value
 
-
+% Loop over nu
 for dind = 1:length(nu)
-    % each degree of SOS multipler 
     TimeSolver{dind} = zeros(length(Dim),2);
-    Cost{dind}       = zeros(length(Dim),2);
-    DimFull    = length(Dim);
-    DimDec     = length(Dim);
+    Cost{dind} = zeros(length(Dim),2);
+    DimFull = length(Dim);
+    DimDec = length(Dim);
 
-    
     for index = 1:length(Dim)
         d = Dim(index);
 
         % generating the polynomial matrix for testing
-
         k = [k1;k2];
         m = 3*d;
         a = [k2*x^4+y^4; k2*y^4+z^4; k2*z^4+x^4];
@@ -55,9 +56,8 @@ for dind = 1:length(nu)
         v = sdpvar(m,1);    % vector for scalarization  
 
         % Standard SOS without exploiting chordal sparity
-        opts.sos.csp = 0;              % assume this option has been modified in Yalmip
-        opts.verbose = 0;
-        F = sos(v'*P*v*(x^2+y^2+z^2)^(nu(dind)));     % The current Yalmip only exploit csp in the scalar case 
+        opts.sos.csp = 0;
+        F = sos(v'*P*v*(x^2+y^2+z^2)^(nu(dind)));
         if index <=  DimFull
             try
                 sol = solvesos(F,k2 - 10*k1,opts);
@@ -71,8 +71,8 @@ for dind = 1:length(nu)
 
          % SOS via exploiting chordal sparity
          if index <= DimDec
-            opts.sos.csp = 1;              % only this option matters
-            F = sos(v'*P*v*(x^2+y^2+z^2)^(nu(dind)));               % The current Yalmip only exploit csp in the scalar case     
+            opts.sos.csp = 1;
+            F = sos(v'*P*v*(x^2+y^2+z^2)^(nu(dind)));
             try
                 sol1 = solvesos(F,k2 - 10*k1,opts);
                 TimeSolver{dind}(index,2) = sol1.solvertime;
