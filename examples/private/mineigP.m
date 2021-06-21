@@ -10,13 +10,16 @@ function lambda = mineigP(m,A,B,input_r,input_theta)
 
     [row,column]  = size(input_r);
     lambda = zeros(size(input_r));
+    p0 = @(x,y) 1 - x.^2 - y.^2;
+    p1 = @(x,y) x + x.*y - x.^3;
+    p2 = @(x,y) 2.*x.^2.*y - x.*y - 2.*y.^3;
     for i = 1:row
         for j = 1:column
             r = input_r(i,j);
             theta = input_theta(i,j);
-            P = (1 - (r*sin(theta))^2 - (r*cos(theta))^2)*eye(m) ...
-                + (r*sin(theta) + r*sin(theta)*r*cos(theta) - (r*sin(theta))^3)*A ...
-                + (2*(r*sin(theta))^2*r*cos(theta) - r*sin(theta)*r*cos(theta)-2*(r*cos(theta))^3)*B;
+            x = r.*cos(theta);
+            y = r.*sin(theta);
+            P = ( p0(x,y).*eye(m) + p1(x,y).*A  + p2(x,y).*B ) .*r;
             lambda(i,j) = min(eig(P));
         end
     end

@@ -8,7 +8,8 @@
 
 % draw inner approximations
 clear; close all
-load('ex5_2_sparse.mat')  % Pre-computed results using standard and Sparse SOS formulation
+Dsparse = load('ex5_2_sparse.mat');  % Pre-computed results using sparse SOS formulation
+% Ddense  = load('ex5_2_dense.mat');  % Pre-computed results using dense SOS formulation
 
 % Clean up
 yalmip clear
@@ -23,7 +24,7 @@ p2 = @(x,y) 2*x^2*y-x*y-2*y^3;
 Deg = [2,3,4];            % half degree of SOS multipliers
 
 % Parameters for figures 
-N  = 50;
+N  = 100;
 xg = linspace(-1,1,N); yg = linspace(-1,1,N);
 ColorBar = lines(5); ColorBar = [0 0 0; ColorBar([1 2 4],:)];
 Lwidth = 1;   % line width
@@ -35,7 +36,7 @@ th = linspace(0,2*pi,200);
 xunit = 1 * cos(th) + 0;
 yunit = 1 * sin(th) + 0;
 
-for indm = 2:length(Gsize)   % Different matris sizes
+for indm = 2:length(Dsparse.Gsize)   % Different matris sizes
         
     % ------------------------------------------------------------------------
     % Figures: Plot the contour = 0 
@@ -46,7 +47,7 @@ for indm = 2:length(Gsize)   % Different matris sizes
     for i = 1:numel(xg_mesh)
         x = xg_mesh(i);
         y = yg_mesh(i);
-        P = p0(x,y).*eye(Gsize(indm)) + p1(x,y)*A{indm} + p2(x,y)*B{indm};
+        P = p0(x,y).*eye(Dsparse.Gsize(indm)) + p1(x,y)*Dsparse.A{indm} + p2(x,y)*Dsparse.B{indm};
         Eig_grid(i) = min(eig(P));
     end
     
@@ -61,12 +62,7 @@ for indm = 2:length(Gsize)   % Different matris sizes
         plot(xunit,yunit,'k:','linewidth',Lwidth);hold on
         
         % plot the real boundary 
-        [bnd0,h0]=contour(xg_mesh,yg_mesh,Eig_grid',[0 0],'color',ColorBar(1,:),'linewidth',Lwidth); 
-        %idx_bnd = (abs(bnd0(1,:)) <= 1) & (abs(bnd0(2,:)) <= 1);
-        %bnd0 = bnd0(:,idx_bnd);  % remove large values
-        %patch(bnd0(1,:),bnd0(2,:),ColorBar(1),'FaceAlpha',0.05) 
-        %plot(bnd0(1,:),bnd0(2,:),ColorBar(1),'linewidth',Lwidth) 
-
+        [bnd0,h0]=contour(xg_mesh,yg_mesh,Eig_grid,[0 0],'color',ColorBar(1,:),'linewidth',Lwidth); 
 
 %         % standard SOS
 %         monobasis = monolist([x,y],2*Deg(indx));
@@ -85,26 +81,21 @@ for indm = 2:length(Gsize)   % Different matris sizes
 %         end
 
         % Sparse SOS
-        exponents = monpowers(2,2*Deg(indx));
         pgrid = zeros(N,N);
-        for i = 1:size(exponents,1)
-            pgrid = pgrid + gSparse{indx,indm}(i) .* xg_mesh.^exponents(i,1) .* yg_mesh.^exponents(i,2);
+        powers = Dsparse.exponents{indx,indm};
+        for i = 1:size(powers,1)
+            pgrid = pgrid + Dsparse.gSparse{indx,indm}(i) .* xg_mesh.^powers(i,1) .* yg_mesh.^Dsparse.exponents(i,2);
         end
         pgrid(xg_mesh.^2+yg_mesh.^2>1) = -100;
-        hold on; [bnd2,h2] = contour(xg_mesh,yg_mesh,pgrid',[0 0], 'color',ColorBar(3,:),'linewidth',Lwidth);
+        hold on; [bnd2,h2] = contour(xg_mesh,yg_mesh,pgrid,[0 0], 'color',ColorBar(3,:),'linewidth',Lwidth);
         
         % Format
         axis square
         axis([-1 1 -1 1])
+        xlabel('$x_1$','Interpreter','latex','FontSize',Fontsize)
+        xlabel('$x_2$','Interpreter','latex','FontSize',Fontsize)
         set(gca,'TickLabelInterpreter','latex','fontsize',Fontsize);
-        %set(gca,'Position',[0.05+(indx-1)*0.25+(indx-1)*0.075 0.15 0.25 0.8])
-
     end
-    
-    %h = legend([h0,h1,h2],'Boundary of set $P$','Standard SOS','Sparse SOS','Interpreter','latex');
-    %set(h,'box','off');
-    %set(h,'orientation','horizontal','FontSize',Fontsize,...
-    %    'Position',[0.15 0.06 0.7 0.03],'Interpreter','latex')
 
     % Print
     ff.Position([3 4]) = FigSize;
