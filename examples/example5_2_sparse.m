@@ -9,15 +9,14 @@
 % https://github.com/aeroimperial-optimization/aeroimperial-yalmip
 % =================================================================
 % Clean up
-%clear, clc
-function example5_2_sparse(iii)
+clear, clc
 yalmip clear
 
 % Load pre-generated chordal graphs and data
 load('data/example5_2_graphs.mat','G','A','B','Gsize')
 
 % Parameters: half-degree of SOS multipliers
-Deg = 2:6;
+Deg = 10;
 
 % Initalize containers for the results
 gSparse    = cell(length(Deg),length(Gsize));
@@ -25,7 +24,7 @@ exponents    = cell(length(Deg),length(Gsize));
 objSparse  = zeros(length(Deg),length(Gsize));
 timeSparse = zeros(length(Deg),length(Gsize));
 
-for indm = iii%length(Gsize)
+for indm = 2%length(Gsize)
     m = Gsize(indm);
     clique = cliquesFromSpMatD(G{indm}); % cliques of graph
     fprintf('     Graph size: %d \n',m)
@@ -87,5 +86,5 @@ for indm = iii%length(Gsize)
         objSparse(indx,indm)  = value(cost);
         timeSparse(indx,indm) = sol.solvertime;
     end
-    save(sprintf('./data/ex5_2_sparse_graph%i.mat',indm),'Gsize','G','A','B','gSparse','objSparse','timeSparse','exponents');
+%     save(sprintf('./data/ex5_2_sparse_graph%i.mat',indm),'Gsize','G','A','B','gSparse','objSparse','timeSparse','exponents');
 end
