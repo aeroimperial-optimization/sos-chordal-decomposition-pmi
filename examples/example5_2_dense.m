@@ -48,12 +48,12 @@ for indm = 1%:length(Gsize)
         % even though analytical expressions exist!
         % Note: area element in polar coordinates is r*dr*d\theta
         [g,gc] = polynomial([x,y],2*Deg(indx));
-        exponents = getexponentbase(g,[x,y]);
-        exponents = full(exponents);
-        moment = zeros(size(exponents,1),1);
+        exponents{indx,indm} = getexponentbase(g,[x,y]);
+        exponents{indx,indm} = full(exponents{indx,indm});
+        moment = zeros(size(exponents{indx,indm},1),1);
         for i = 1:size(exponents,1)
             % Integrate x^a*y^b over unit disk in polar coordinates
-            tmp = exponents(i,:);
+            tmp = exponents{indx,indm}(i,:);
             p = @(r,theta) (r.*cos(theta)).^(tmp(1)) .* (r.*sin(theta)).^(tmp(2)) .*r;
             moment(i) = integral2(p,0,1,0,2*pi);
         end
@@ -83,6 +83,6 @@ for indm = 1%:length(Gsize)
                 warning('out of memory')
             end
         end
-        
+        save(sprintf('./data/ex5_2_dense_graph%i.mat',indm),'Gsize','G','A','B','gStandard','objStandard','timeStandard','exponents');
     end
 end

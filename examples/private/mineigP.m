@@ -19,7 +19,7 @@ function lambda = mineigP(m,A,B,input_r,input_theta)
             theta = input_theta(i,j);
             x = r.*cos(theta);
             y = r.*sin(theta);
-            P = ( p0(x,y).*eye(m) + p1(x,y).*A  + p2(x,y).*B ) .*r;
+            P = ( p0(x,y).*eye(m) + p1(x,y).*A  + p2(x,y).*B );
             lambda(i,j) = min(eig(P));
         end
     end

@@ -8,7 +8,7 @@
 
 % draw inner approximations
 clear; close all
-Dsparse = load('ex5_2_sparse.mat');  % Pre-computed results using sparse SOS formulation
+Dsparse = load('data/ex5_2_sparse.mat');  % Pre-computed results using sparse SOS formulation
 % Ddense  = load('ex5_2_dense.mat');  % Pre-computed results using dense SOS formulation
 
 % Clean up
@@ -21,7 +21,7 @@ p1 = @(x,y) x + x*y - x^3;
 p2 = @(x,y) 2*x^2*y-x*y-2*y^3;
 
 % Parameters
-Deg = [2,3,4];            % half degree of SOS multipliers
+Deg = [2:6];            % half degree of SOS multipliers
 
 % Parameters for figures 
 N  = 100;
@@ -55,14 +55,14 @@ for indm = 2:length(Dsparse.Gsize)   % Different matris sizes
     ff = figure('WindowStyle','normal');
     ff.Units = 'centimeters';
     ff.Position([3 4]) = FigSize;
-    for indx = 1:3 %length(Deg)
-        subplot(1,3,indx)
+    for indx = 1:length(Deg)
+        subplot(1,length(Deg),indx)
         
         % Plot the unit circle 
         plot(xunit,yunit,'k:','linewidth',Lwidth);hold on
         
         % plot the real boundary 
-        [bnd0,h0]=contourf(xg_mesh,yg_mesh,Eig_grid,[0 0],'color',ColorBar(1,:),'linewidth',Lwidth); 
+        [bnd0,h0]=contour(xg_mesh,yg_mesh,Eig_grid,[0 0],'color',ColorBar(1,:),'linewidth',Lwidth); 
 
         % Dense SOS
 %         monobasis = monolist([x,y],2*Deg(indx));

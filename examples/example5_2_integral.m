@@ -14,7 +14,7 @@ function example5_2_integral
         m  = Gsize(indm);
         Am = A{indm};
         Bm = B{indm};
-        p = @(r,theta) mineigP(m,Am,Bm,r,theta);
+        p = @(r,theta) mineigP(m,Am,Bm,r,theta) .* r;
         tstart = tic;
         cost_integral(indm) = integral2(p,0,1,0,2*pi,'AbsTol',1e-7,'RelTol',1e-8); 
         tend = toc(tstart);

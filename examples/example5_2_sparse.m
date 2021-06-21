@@ -87,5 +87,5 @@ for indm = iii%length(Gsize)
         objSparse(indx,indm)  = value(cost);
         timeSparse(indx,indm) = sol.solvertime;
     end
-    save(sprintf('ex5_2_sparse_graph%i.mat',indm),'Gsize','G','A','B','gSparse','objSparse','timeSparse','exponents');
+    save(sprintf('./data/ex5_2_sparse_graph%i.mat',indm),'Gsize','G','A','B','gSparse','objSparse','timeSparse','exponents');
 end

@@ -5,10 +5,10 @@ fnames = dir('ex5_2_sparse_graph*.mat');
 
 % Initalize containers
 Gsize = length(fnames);
-gSparse    = cell(3,length(Gsize));
-exponents    = cell(3,length(Gsize));
-objSparse  = zeros(3,length(Gsize));
-timeSparse = zeros(3,length(Gsize));
+gSparse    = cell(5,length(Gsize));
+exponents    = cell(5,length(Gsize));
+objSparse  = zeros(5,length(Gsize));
+timeSparse = zeros(5,length(Gsize));
 % gStandard    = cell(3,length(Gsize));
 % objStandard = zeros(3,length(Gsize));
 % timeStandard = zeros(3,length(Gsize));
