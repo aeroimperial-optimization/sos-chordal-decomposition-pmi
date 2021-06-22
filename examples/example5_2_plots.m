@@ -8,20 +8,19 @@
 
 % draw inner approximations
 clear; close all
-Dsparse = load('data/ex5_2_sparse.mat');  % Pre-computed results using sparse SOS formulation
-% Ddense  = load('ex5_2_dense.mat');  % Pre-computed results using dense SOS formulation
+Dsparse = load('data/ex5_2_sparse_new.mat');  % Pre-computed results using sparse SOS formulation
+Ddense  = load('data/ex5_2_dense_new.mat');  % Pre-computed results using dense SOS formulation
 
 % Clean up
 yalmip clear
 
 % Problem data  {x \in R^2, P(x) \geq 0}. 
-sdpvar x y
 p0 = @(x,y) 1 - x^2 - y^2;
 p1 = @(x,y) x + x*y - x^3;
 p2 = @(x,y) 2*x^2*y-x*y-2*y^3;
 
 % Parameters
-Deg = [2:6];            % half degree of SOS multipliers
+Deg = [2,3,4];            % half degree of SOS multipliers
 
 % Parameters for figures 
 N  = 100;
@@ -65,21 +64,16 @@ for indm = 2:length(Dsparse.Gsize)   % Different matris sizes
         [bnd0,h0]=contour(xg_mesh,yg_mesh,Eig_grid,[0 0],'color',ColorBar(1,:),'linewidth',Lwidth); 
 
         % Dense SOS
-%         monobasis = monolist([x,y],2*Deg(indx));
-%         if ~isempty(gStandard{indx,indm})  % has a solution
-%         p = gStandard{indx,indm}'*monobasis;  % { x\in R^2, p(x) >=0}
-%         pgrid = zeros(N,N);
-%         for i = 1:N
-%             for j = 1:N
-%                 pgrid(i,j) = replace(p,[x y],[xg(i) yg(j)]);
-%                 if xg(i)^2 +  yg(j)^2 > 1
-%                     pgrid(i,j) = -100;  % outside the unit circle
-%                 end
-%             end
-%         end
-%         hold on; [bnd1,h1] = contour(xg_mesh,yg_mesh,pgrid',[0 0],ColorBar(2),'linewidth',Lwidth);
-%         end
-
+        pgrid = zeros(N,N);
+        powers = Ddense.exponents{indx,indm};
+        if ~isempty(Ddense.gStandard{indx,indm})  % value computed
+        for i = 1:size(powers,1)
+            pgrid = pgrid + Ddense.gStandard{indx,indm}(i) .* xg_mesh.^powers(i,1) .* yg_mesh.^powers(i,2);
+        end
+        pgrid(xg_mesh.^2+yg_mesh.^2>1) = -100;
+        hold on; [bnd1,h1] = contour(xg_mesh,yg_mesh,pgrid,[0 0], 'color',ColorBar(2,:),'linewidth',Lwidth);
+        end
+        
         % Sparse SOS
         pgrid = zeros(N,N);
         powers = Dsparse.exponents{indx,indm};
@@ -100,7 +94,7 @@ for indm = 2:length(Dsparse.Gsize)   % Different matris sizes
     % Print
     ff.Position([3 4]) = FigSize;
     fname = ['inner_approx',num2str(Dsparse.Gsize(indm))];
-%     print(gcf,fname,'-painters','-depsc','-r600')
+    print(gcf,fname,'-painters','-depsc','-r600')
 end
 
 

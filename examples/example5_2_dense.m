@@ -51,7 +51,7 @@ for indm = 1%:length(Gsize)
         exponents{indx,indm} = getexponentbase(g,[x,y]);
         exponents{indx,indm} = full(exponents{indx,indm});
         moment = zeros(size(exponents{indx,indm},1),1);
-        for i = 1:size(exponents,1)
+        for i = 1:size(moment,1)
             % Integrate x^a*y^b over unit disk in polar coordinates
             tmp = exponents{indx,indm}(i,:);
             p = @(r,theta) (r.*cos(theta)).^(tmp(1)) .* (r.*sin(theta)).^(tmp(2)) .*r;
