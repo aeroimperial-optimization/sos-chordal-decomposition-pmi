@@ -16,7 +16,7 @@ yalmip clear
 load('data/example5_2_graphs.mat','G','A','B','Gsize')
 
 % Parameters: half-degree of SOS multipliers
-Deg = 10;
+Deg = 14;
 
 % Initalize containers for the results
 gSparse    = cell(length(Deg),length(Gsize));
@@ -86,5 +86,5 @@ for indm = 2%length(Gsize)
         objSparse(indx,indm)  = value(cost);
         timeSparse(indx,indm) = sol.solvertime;
     end
-%     save(sprintf('./data/ex5_2_sparse_graph%i.mat',indm),'Gsize','G','A','B','gSparse','objSparse','timeSparse','exponents');
+    save(sprintf('./data/ex5_2_sparse_highDeg_graph%i.mat',indm),'Gsize','G','A','B','gSparse','objSparse','timeSparse','exponents');
 end
