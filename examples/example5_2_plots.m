@@ -71,9 +71,15 @@ for indm = 2:length(Dsparse.Gsize)   % Different matris sizes
             for i = 1:size(powers,1)
                 pgrid = pgrid + Ddense.gStandard{indx,indm}(i) .* xg_mesh.^powers(i,1) .* yg_mesh.^powers(i,2);
             end
-            pgrid(xg_mesh.^2+yg_mesh.^2>1) = -100;
+            pgrid(xg_mesh.^2+yg_mesh.^2>1) = NaN;
             hold on; [bnd1,h1] = contour(xg_mesh,yg_mesh,pgrid,[0 0], 'color',ColorBar(2,:),'linewidth',Lwidth);
+            Z = pgrid; Z(Z<0) = NaN; Z(Z>=0) = 1;
+            colormap(ColorBar(2,:))
+            p = pcolor(xg_mesh,yg_mesh,Z);
+            p.LineStyle = 'none';
+            p.FaceAlpha = 0.25;
         end
+        
         
         % Sparse SOS
         pgrid = zeros(N,N);
@@ -83,6 +89,7 @@ for indm = 2:length(Dsparse.Gsize)   % Different matris sizes
         end
         pgrid(xg_mesh.^2+yg_mesh.^2>1) = -100;
         hold on; [bnd2,h2] = contour(xg_mesh,yg_mesh,pgrid,[0 0], 'color',ColorBar(3,:),'linewidth',Lwidth);
+        h2.LineStyle = '-';
         
         % Format
         axis square
@@ -100,6 +107,9 @@ for indm = 2:length(Dsparse.Gsize)   % Different matris sizes
         elseif indm>2
             ax.YTickLabel = [];
         end
+        t = title(sprintf('$m=%i$, $d=%i$',Dsparse.Gsize(indm),Deg(indx)));
+        t.Interpreter = 'latex';
+        t.FontSize = Fontsize-2;
         ax.Position([3 4]) = 1.1*ax.Position([3 4]);
         ax.Position(2) = yPos(indx);
     end
@@ -113,6 +123,6 @@ ff.PaperUnits = 'centimeters';
 ff.PaperSize = FigSize;
 ff.PaperPosition = [0 0 FigSize];
 fname = ['gio_inner_approx'];
-print(gcf,fname,'-painters','-depsc','-r600')
+print(gcf,fname,'-painters','-depsc','-r300')
 
 
