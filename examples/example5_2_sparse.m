@@ -1,4 +1,5 @@
-% =================================================================% Code for Example 5-2 in the paper:
+% =================================================================
+% Code for Example 5-2 in the paper:
 % Y. Zheng, G. Fantuzzi, Sum-of-squares chordal decomposition of polynomial
 % matrix inequalities
 %
@@ -16,15 +17,16 @@ yalmip clear
 load('data/example5_2_graphs.mat','G','A','B','Gsize')
 
 % Parameters: half-degree of SOS multipliers
+% Deg = 2:4;
 Deg = 14;
 
 % Initalize containers for the results
 gSparse    = cell(length(Deg),length(Gsize));
-exponents    = cell(length(Deg),length(Gsize));
+exponents  = cell(length(Deg),length(Gsize));
 objSparse  = zeros(length(Deg),length(Gsize));
 timeSparse = zeros(length(Deg),length(Gsize));
 
-for indm = 2%length(Gsize)
+for indm = 2%:length(Gsize)
     m = Gsize(indm);
     clique = cliquesFromSpMatD(G{indm}); % cliques of graph
     fprintf('     Graph size: %d \n',m)

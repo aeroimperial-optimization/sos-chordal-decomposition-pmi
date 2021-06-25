@@ -1,9 +1,11 @@
 % =================================================================
-% Code for Example 3.5 in the paper:
+% Code for Example 5.1 in the paper:
 % Y. Zheng, G. Fantuzzi, Sum-of-squares chordal decomposition of polynomial 
 % matrix inequalities
 %
-% NOTE: Assume the option sos.csp in Yalmip has been modified
+% NOTE: Assume the option sos.csp in Yalmip has been modified or
+%          install the following fork of YALMIP:
+% https://github.com/aeroimperial-optimization/aeroimperial-yalmip
 % =================================================================
 clc
 clear
@@ -15,9 +17,9 @@ opts =  sdpsettings();
 opts.verbose = 0;
 
 % Parameters
-Dim = 2:2:6;     % Dimension of the polynomial matrix
+Dim = 5:5:40;     % Dimension of the polynomial matrix
                  % the range of 5:5:40 was used in the paper                  
-nu = 1;          % degree of SOS multipler  
+nu = 0:1:3;          % degree of SOS multipler  
                  % the range of 1:4 was used in the paper            
 
 % Initalize containers
@@ -83,6 +85,6 @@ for dind = 1:length(nu)
             end
         end
 
-        fprintf('m = %d,  time %5.3f  %5.3f \n ',m, TimeSolver{dind}(index,1),TimeSolver{dind}(index,2));
+        fprintf('m = %d,  time %5.3f  %5.3f \n',m, TimeSolver{dind}(index,1),TimeSolver{dind}(index,2));
     end
 end

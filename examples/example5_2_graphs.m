@@ -5,7 +5,7 @@
 %
 % =================================================================
 
-Gsize = 10:5:40;
+Gsize = 5:2:10;  % 10:5:40 was used in the paper
 maxClique = 5;   % bound on the largest maximal cliques
 G = [];
 A = [];
@@ -23,4 +23,4 @@ for indm = 1:length(Gsize)
     B{indm} = (spones(G{indm}) - eye(m)).*tmp;   % zeros on its diagonal
 end
 
-%save('example5_2_graphs.mat','G','A','B','Gsize');
+%save('data/example5_2_graphs_new.mat','G','A','B','Gsize');

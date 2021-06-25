@@ -25,7 +25,7 @@ gStandard    = cell(length(Deg),length(Gsize));
 objStandard  = zeros(length(Deg),length(Gsize));
 timeStandard = zeros(length(Deg),length(Gsize));
 
-for indm = 1%:length(Gsize)
+for indm = 1:length(Gsize)
     m         = Gsize(indm);
     fprintf('Graph size: %d \n\n',m);
     memFlag = 0;  % out of memory for Standard SOS?
@@ -66,12 +66,12 @@ for indm = 1%:length(Gsize)
         
         % Solve without sparsity exploitation
         opts = sdpsettings('sos.csp',0);
-        if m >= 30 && Deg(indx) == 4  % these choices --> out of memory on our computer
-            memFlag = 1;
-        end
-        if m >= 35 && Deg(indx) >= 3 % these choices --> out of memory on our computer
-            memFlag = 1;
-        end
+%         if m >= 30 && Deg(indx) == 4  % these choices --> out of memory on our computer
+%             memFlag = 1;
+%         end
+%         if m >= 35 && Deg(indx) >= 3 % these choices --> out of memory on our computer
+%             memFlag = 1;
+%         end
         if memFlag == 0
             try
                 sol =  solvesos(F,-cost,opts,[s1c; gc]);

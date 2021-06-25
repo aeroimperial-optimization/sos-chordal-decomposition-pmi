@@ -1,5 +1,5 @@
 % =================================================================
-% Code for Example 3.5 in the paper:
+% Code for Example 5.1 in the paper:
 % Y. Zheng, G. Fantuzzi, Sum-of-squares chordal decomposition of polynomial 
 % matrix inequalities
 %

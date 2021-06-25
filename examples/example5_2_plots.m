@@ -1,5 +1,5 @@
 % =================================================================
-% Plot inner approximation, Example 5-2 in the paper:
+% Plot inner approximation (Figure 6), Example 5-2 in the paper:
 %
 % Y. Zheng, G. Fantuzzi, Sum-of-squares chordal decomposition of polynomial
 % matrix inequalities
@@ -123,6 +123,6 @@ ff.PaperUnits = 'centimeters';
 ff.PaperSize = FigSize;
 ff.PaperPosition = [0 0 FigSize];
 fname = ['gio_inner_approx'];
-print(gcf,fname,'-painters','-depsc','-r300')
+%print(gcf,fname,'-painters','-depsc','-r300')
 
 
